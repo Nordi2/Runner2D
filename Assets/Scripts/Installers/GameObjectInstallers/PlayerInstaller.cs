@@ -9,6 +9,7 @@ namespace Assets.Scripts.Installers.GameObjectInstallers
     {
         [SerializeField] private PlayerConfig _config;
         [SerializeField] private PlayerView _view;
+        [SerializeField] private DetectedCollisionObjectsObserver _observer;
 
         public override void InstallBindings()
         {
@@ -23,8 +24,21 @@ namespace Assets.Scripts.Installers.GameObjectInstallers
                 .AsSingle();
 
             Container
+                .BindInstance(_observer)
+                .AsSingle();
+
+            Container
                 .BindInterfacesTo<PlayerMovement>()
                 .AsSingle();
+
+            Container
+                .BindInterfacesAndSelfTo<PlayerCollisionHandler>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesTo<PlayerDied>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

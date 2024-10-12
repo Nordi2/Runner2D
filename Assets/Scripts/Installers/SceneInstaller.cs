@@ -1,3 +1,4 @@
+using Assets.Scripts.Logic.UI;
 using Assets.Scripts.Services.Input;
 using Zenject;
 
@@ -9,6 +10,11 @@ namespace Assets.Scripts.Installers
         {
             Container
                 .BindInterfacesTo<InputService>()
+                .AsSingle()
+                .NonLazy();
+
+            Container
+                .Bind<ScoreBank>()
                 .AsSingle()
                 .NonLazy();
         }
