@@ -1,14 +1,23 @@
+using Assets.Scripts.Configs;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Logic.Wall
 {
-    public class WallMovement : MonoBehaviour
+    public class WallMovement : IFixedTickable
     {
-        [SerializeField] private float _moveSpeed;
+        private readonly WallView _view;
+        private readonly ObstacleConfig _config;
 
-        private void Update()
+        public WallMovement(WallView view, ObstacleConfig config)
         {
-            transform.position += Vector3.left * _moveSpeed * Time.deltaTime;
+            _view = view;
+            _config = config;
+        }
+
+        public void FixedTick()
+        {
+            _view.Rigidbody.velocity = Vector3.left * _config.MoveSpeed * Time.deltaTime;
         }
     }
 }

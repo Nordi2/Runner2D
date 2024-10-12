@@ -1,3 +1,4 @@
+using Assets.Scripts.Services.Input;
 using Zenject;
 
 namespace Assets.Scripts.Installers
@@ -6,7 +7,10 @@ namespace Assets.Scripts.Installers
     {
         public override void InstallBindings()
         {
-
+            Container
+                .BindInterfacesTo<InputService>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }
