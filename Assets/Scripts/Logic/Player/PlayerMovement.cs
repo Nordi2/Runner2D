@@ -1,46 +1,46 @@
+using Assets.Scripts.Configs;
+using Assets.Scripts.Logic.Player;
 using UnityEngine;
+using Zenject;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : ITickable, IInitializable
 {
-    [SerializeField] private Rigidbody2D _rigidbody;
-    [SerializeField] private float _jumpForce;
-
-    [SerializeField] private LayerMask _layerMask;
-    [SerializeField] private float _checkRadius;
-    [SerializeField] private Transform _groundCheck;
-
     private bool _isGrounded;
-    public int MaxJumpValue;
-    int maxjump;
+    private int _maxJump;
 
-    private void Start()
+    private readonly PlayerConfig _playerConfig;
+    private readonly PlayerView _playerView;
+
+    public PlayerMovement(PlayerConfig playerConfig, PlayerView playerView)
     {
-        maxjump = MaxJumpValue;
+        _playerConfig = playerConfig;
+        _playerView = playerView;
     }
 
-    private void Update()
-    {
-        _isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _checkRadius, _layerMask);
+    public void Initialize() =>
+        _maxJump = _playerConfig.MaxValueJump;
 
-        if (Input.GetMouseButtonDown(0) && maxjump > 0)
+    public void Tick()
+    {
+        _isGrounded = Physics2D.OverlapCircle(_playerView.GroundCheck.position, _playerConfig.CheckRadiues, _playerView.LayerMask);
+
+        if (Input.GetMouseButtonDown(0) && _maxJump > 0)
         {
-            maxjump--;
+            _maxJump--;
             Jump();
         }
-        else if (Input.GetMouseButtonDown(0) && maxjump == 0 && _isGrounded)
+        else if (Input.GetMouseButtonDown(0) && _maxJump == 0 && _isGrounded)
         {
             Jump();
         }
 
         if (_isGrounded)
-        {
-            maxjump = MaxJumpValue;
-        }
+            _maxJump = _playerConfig.MaxValueJump;
     }
 
     private void Jump()
     {
-        _rigidbody.velocity = Vector2.zero;
-        _rigidbody.AddForce(new Vector2(0, _jumpForce));
+        _playerView.Rigidbody.velocity = Vector2.zero;
+        _playerView.Rigidbody.AddForce(new Vector2(0, _playerConfig.JumpForce));
     }
 }
