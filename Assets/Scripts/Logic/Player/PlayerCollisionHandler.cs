@@ -1,4 +1,5 @@
 using Assets.Scripts.Logic.Interfaces;
+using Assets.Scripts.Logic.Score;
 using Assets.Scripts.Logic.UI;
 using System;
 using UnityEngine;
@@ -38,6 +39,8 @@ namespace Assets.Scripts.Logic.Player
                 case TypeCollisionObjects.None:
                     throw new ArgumentException($"The type is not defined on this objects {objects}");
                 case TypeCollisionObjects.Friendly:
+                    IScoreFacade score = obj.GetComponentInParent<IScoreFacade>();
+                    score.Collect();
                     _scoreBank.AddScore();
                     break;
                 case TypeCollisionObjects.Hostile:

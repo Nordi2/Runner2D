@@ -6,7 +6,7 @@ namespace Assets.Scripts.Installers
 {
     public class UIInstaller : MonoInstaller
     {
-        [SerializeField] private ScoreView _scoreView;
+        [SerializeField] private ScoreViewUI _scoreView;
 
         public override void InstallBindings()
         {

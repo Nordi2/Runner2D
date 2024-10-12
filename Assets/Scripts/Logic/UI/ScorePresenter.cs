@@ -6,9 +6,9 @@ namespace Assets.Scripts.Logic.UI
     public class ScorePresenter : IInitializable, IDisposable
     {
         private readonly ScoreBank _scoreBank;
-        private readonly ScoreView _scoreView;
+        private readonly ScoreViewUI _scoreView;
 
-        public ScorePresenter(ScoreBank scoreBank, ScoreView scoreView)
+        public ScorePresenter(ScoreBank scoreBank, ScoreViewUI scoreView)
         {
             _scoreBank = scoreBank;
             _scoreView = scoreView;
@@ -25,9 +25,7 @@ namespace Assets.Scripts.Logic.UI
             _scoreBank.OnAddSCore -= UpdateScoreText;
         }
 
-        private void UpdateScoreText()
-        {
+        private void UpdateScoreText() =>
             _scoreView.UpdateText($"Score:{_scoreBank.CurrentScore}");
-        }
     }
 }
