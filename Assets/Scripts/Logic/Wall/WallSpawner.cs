@@ -1,33 +1,48 @@
+using Assets.Scripts.Configs;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Logic.Wall
 {
-    public class WallSpawner : MonoBehaviour
+    public class WallSpawner : ITickable, IInitializable
     {
-        [SerializeField] private float _maxTime;
-        [SerializeField] private float _maxHeight;
-        [SerializeField] private float _minHeight;
-        [SerializeField] GameObject _wallPrefab;
+        private float _currentTime;
+        private float _timeSpawnObstacle;
+        private Transform _spawnPoint;
 
-        private GameObject _wall;
-        private float _time;
+        private readonly WallSpawnerConfig _config;
+        private readonly IInstantiator _instantiator;
 
-        private void Start()
+        public WallSpawner(WallSpawnerConfig config, IInstantiator instantiator, Transform spawnPoint)
         {
-            _time = 1;
+            _config = config;
+            _spawnPoint = spawnPoint;
+            _instantiator = instantiator;
         }
 
-        private void Update()
+        public void Initialize() =>
+            ChangeTheSpawnTime();
+
+        public void Tick()
         {
-            if (_time > _maxTime)
+            _currentTime += Time.deltaTime;
+
+            if (_currentTime >= _timeSpawnObstacle)
             {
-                _wall = Instantiate(_wallPrefab);
-                _wall.transform.position = transform.position + new Vector3(0, Random.Range(_minHeight, _maxHeight), 0);
-                _time = 0;
+                SpawnObstacle();
+                _currentTime = 0;
             }
-
-            _time += Time.deltaTime;
-            Destroy(_wall, 8f);
         }
+
+        private void SpawnObstacle()
+        {
+            ChangeTheSpawnTime();
+            float randomOffsetY = Random.Range(_config.MinHeightPosition, _config.MaxHeightPosition);
+            Vector3 spawPosition = new Vector3(_spawnPoint.position.x, _spawnPoint.position.y + randomOffsetY, _spawnPoint.position.z);
+            _instantiator.InstantiatePrefab(_config.ListObstacle[0].PrefabObstacle, spawPosition, Quaternion.identity, null);
+        }
+
+        private void ChangeTheSpawnTime() =>
+            _timeSpawnObstacle = Random.Range(_config.TimeSpawnObstale.x, _config.TimeSpawnObstale.y);
     }
 }

@@ -2,7 +2,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Configs
 {
-    [CreateAssetMenu(fileName = "PlayerConfig", menuName = "ScritableObjects/PlayerConfig")]
+    [CreateAssetMenu(
+        fileName = "PlayerConfig",
+        menuName = "ScritableObjects/PlayerConfig")]
     public class PlayerConfig : ScriptableObject
     {
         [field: SerializeField, Min(1)] public float JumpForce { get; private set; }

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Wall
   m_EditorClassIdentifier: 
   <MoveSpeed>k__BackingField: 200
+  <PrefabObstacle>k__BackingField: {fileID: 617119588697484554, guid: 367991615d59b3f4e99ea89a2a5e4126, type: 3}

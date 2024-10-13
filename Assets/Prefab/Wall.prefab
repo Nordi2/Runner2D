@@ -275,6 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 3063565704906266146}
+  _typeObject: 2
 --- !u!50 &3063565704906266146
 Rigidbody2D:
   serializedVersion: 4
@@ -301,4 +302,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

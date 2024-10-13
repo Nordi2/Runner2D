@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498d6cfc001a3b8478e80706f8fd121d, type: 3}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
-  <JumpForce>k__BackingField: 240
+  <JumpForce>k__BackingField: 260
   <CheckRadiues>k__BackingField: 0.2
   <MaxValueJump>k__BackingField: 1
